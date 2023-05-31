@@ -5,4 +5,7 @@ import io.bitswar.openproject.core.Endpoints
 
 @Service(Service.Level.APP)
 class WorkPackageEndpoints: Endpoints() {
+    fun getWorkPackagesByProject(id: String): String {
+        return buildEndpoint("projects", id, "work_packages")
+    }
 }

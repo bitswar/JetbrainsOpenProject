@@ -2,14 +2,21 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.8.21"
     id("org.jetbrains.intellij") version "1.13.3"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
 }
 
 group = "io.bitswar"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
 }
+
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+}
+
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html

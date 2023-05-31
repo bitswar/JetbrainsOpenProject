@@ -62,6 +62,8 @@
         <applicationService serviceImplementation="io.bitswar.openproject.domain.services.WorkPackageService"/>
         <applicationService serviceImplementation="io.bitswar.openproject.data.repository.WorkPackageRepository"
                             serviceInterface="io.bitswar.openproject.domain.repositories.IWorkPackageRepository"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.data.datasources.WorkPackageDatasource"
+                            serviceInterface="io.bitswar.openproject.data.datasources.IWorkPackageDatasource"/>
 
         <!-- Core -->
         <applicationService serviceImplementation="io.bitswar.openproject.core.RequestBuilder"/>

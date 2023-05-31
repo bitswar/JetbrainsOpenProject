@@ -10,8 +10,13 @@ abstract class Endpoints(
     private val baseUrl: String = baseEndpoints.baseUrl
     private val apiVersion: String = baseEndpoints.apiVersion
     private val scheme: String = baseEndpoints.scheme
+
     fun buildEndpoint(endpoint: String): String {
-        return compose(arrayOf(scheme, baseUrl, apiVersion, endpoint))
+        return scheme + compose(mutableListOf(baseUrl, apiVersion, endpoint))
+    }
+
+    fun buildEndpoint(vararg endpoints: String): String {
+        return scheme + compose(mutableListOf(baseUrl, apiVersion, *endpoints))
     }
 
     fun authorizeUrl(url: String, username: String, password: String): String {
@@ -24,7 +29,7 @@ abstract class Endpoints(
         return endpoints.trim { char -> char == '/' }
     }
 
-    private fun compose(array: Array<String>): String {
+    private fun compose(array: MutableList<String>): String {
         return array.map { e -> sanitizeEndpoint(e) }
             .joinToString(separator = "/") { e -> e.replace(Regex("(?<!:)//"), "/") }
     }

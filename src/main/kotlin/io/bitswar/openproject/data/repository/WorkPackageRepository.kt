@@ -1,16 +1,18 @@
 package io.bitswar.openproject.data.repository
 
 import com.intellij.openapi.components.Service
+import com.intellij.openapi.components.service
+import io.bitswar.openproject.data.datasources.IWorkPackageDatasource
 import io.bitswar.openproject.domain.entities.WorkPackage
 import io.bitswar.openproject.domain.repositories.IWorkPackageRepository
 
 @Service(Service.Level.APP)
 class WorkPackageRepository: IWorkPackageRepository {
-//    private val datasource: IWorkPackageDatasource = service()
-    override fun getAllWorkpackages(): Array<WorkPackage> {
-        return arrayOf(
+    private val datasource: IWorkPackageDatasource = service()
+    override fun getAllWorkpackages(): MutableList<WorkPackage> {
+        return mutableListOf(
             WorkPackage(
-                id = "String",
+                id = 1,
                 title = "String",
                 description = "String",
                 status = "String"
@@ -18,14 +20,16 @@ class WorkPackageRepository: IWorkPackageRepository {
         )
     }
 
-    override fun getProjectWorkpackages(projectID: String): Array<WorkPackage> {
-        return arrayOf(
+    override fun getProjectWorkpackages(projectID: Int): MutableList<WorkPackage> {
+        val dtoList = datasource.getProjectWorkPackages(projectID.toString())
+        val entities = dtoList.map { e ->
             WorkPackage(
-                id = "2",
-                title = "Deploy Lithium",
-                description = "Some task description",
-                status = "String"
+                e.id,
+                e.title,
+                e.description.body,
+                ""
             )
-        )
+        }
+        return entities.toMutableList()
     }
 }

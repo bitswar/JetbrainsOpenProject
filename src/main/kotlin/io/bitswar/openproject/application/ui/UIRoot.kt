@@ -6,7 +6,6 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
 import io.bitswar.openproject.domain.services.ProjectService
-import kotlinx.coroutines.awaitAll
 
 class UIRoot: ToolWindowFactory {
     private val projectService: ProjectService = service()

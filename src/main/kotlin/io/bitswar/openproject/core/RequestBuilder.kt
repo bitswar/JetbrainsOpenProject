@@ -17,7 +17,7 @@ class RequestBuilder {
     fun getRequest(path: String): HttpRequest {
         val uri = URI.create(
             endpoints.authorizeUrl(
-                endpoints.buildEndpoint(path),
+                path,
                 authRepository.getUsername(),
                 authRepository.getAccessToken()
             )
@@ -39,7 +39,7 @@ class RequestBuilder {
     fun postRequest(path: String, body: BodyPublisher?): HttpRequest {
         val uri = URI.create(
             endpoints.authorizeUrl(
-                endpoints.buildEndpoint(path),
+                path,
                 authRepository.getUsername(),
                 authRepository.getAccessToken()
             )

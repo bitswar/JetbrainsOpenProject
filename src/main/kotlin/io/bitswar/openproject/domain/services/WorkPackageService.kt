@@ -8,11 +8,11 @@ import io.bitswar.openproject.domain.repositories.IWorkPackageRepository
 @Service
 class WorkPackageService {
     private val repository: IWorkPackageRepository = service()
-    fun getAllWorkpackages(): Array<WorkPackage> {
+    fun getAllWorkpackages(): MutableList<WorkPackage> {
         return repository.getAllWorkpackages()
     }
 
-    fun getProjectWorkpackages(projectId: String): Array<WorkPackage> {
+    fun getProjectWorkpackages(projectId: Int): MutableList<WorkPackage> {
         return repository.getProjectWorkpackages(projectId)
     }
 }

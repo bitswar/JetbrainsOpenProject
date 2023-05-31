@@ -10,10 +10,10 @@ import org.jetbrains.concurrency.runAsync
 class ProjectService {
     private val repository: IProjectRepository = service()
     private val wpService: WorkPackageService = service()
-    fun getProjects(): Array<Project> {
+    fun getProjects(): MutableList<Project> {
             val projects = repository.getProjects()
             projects.map { e ->
-                e.workPackagesArray = wpService.getProjectWorkpackages(e.id)
+                e.workPackages.addAll(wpService.getProjectWorkpackages(e.id))
             }
             return projects
     }
