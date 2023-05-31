@@ -14,8 +14,31 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    <h1>Features</h1>
+
+    <h2>Authorization.</h2>
+    Getting list of your work packages.
+
+    <h2>Requirements</h2>
+
+        Your OpenProject url
+        Your OpenProject token
+
+    <h2>Extension Settings</h2>
+
+    This extension contributes the following settings:
+
+        openproject.base_url: Your OpenProject url.
+        openproject.token: Your OpenProject access token.
+
+    <h2>Release Notes</h2>
+
+    Users appreciate release notes as you update your extension.
+    1.0.0
+
+    Initial release of OpenProject VSCode extension
+
+    Enjoy!
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
