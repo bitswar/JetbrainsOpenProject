@@ -6,11 +6,14 @@ import com.intellij.openapi.components.service
 import io.bitswar.openproject.domain.services.WorkPackageService
 import io.bitswar.openproject.notify
 import io.bitswar.openproject.notifyError
+import org.jetbrains.concurrency.runAsync
 
 class RefreshWorkpackageArray: AnAction() {
     private val wpService: WorkPackageService = service()
     override fun actionPerformed(e: AnActionEvent) {
-        wpService.getAllWorkpackages()
+        runAsync {
+            wpService.getAllWorkpackages()
+        }
             .onSuccess {
                 notify("Test message", it.toString())
             }

@@ -1,9 +1,15 @@
 package io.bitswar.openproject.data.repository
 
 import com.intellij.openapi.components.Service
+import com.intellij.openapi.components.State
+import com.intellij.openapi.components.Storage
 import io.bitswar.openproject.domain.entities.Profile
 import io.bitswar.openproject.domain.repositories.IAuthRepository
 
+@State(
+    name = "io.bitswar.openproject.data.repository.AuthRepository",
+    storages = [Storage("SdkSettingsPlugin.xml")]
+)
 @Service(Service.Level.APP)
 class AuthRepository: IAuthRepository {
     override fun getProfile(): Profile {

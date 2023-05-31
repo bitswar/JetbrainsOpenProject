@@ -8,7 +8,7 @@
     <name>OpenProject</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">Bitswar</vendor>
+    <vendor email="support@bitswar.io" url="https://github.com/bitswar/">Bitswar</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -25,10 +25,26 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <!-- UI -->
+        <toolWindow id="OpenProject"
+                    anchor="right"
+                    factoryClass="io.bitswar.openproject.application.ui.UIRoot"
+                    secondary="true">
+        </toolWindow>
+
+        <applicationConfigurable
+                parentId="tools"
+                instance="io.bitswar.openproject.data.datasources.AppSettingsConfigurable"
+                id="org.intellij.sdk.settings.AppSettingsConfigurable"
+                displayName="SDK: Application Settings Example"/>
+        <!-- Settings -->
+        <applicationService serviceImplementation="io.bitswar.openproject.data.datasources.AppSettingsState"/>
+
         <!-- Endpoints -->
         <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.BaseEndpoints"/>
         <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.ProjectEndpoints"/>
         <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.AuthEndpoints"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.WorkPackageEndpoints"/>
 
         <!-- Authentication -->
         <applicationService serviceImplementation="io.bitswar.openproject.domain.services.AuthService"/>
@@ -39,6 +55,8 @@
         <applicationService serviceImplementation="io.bitswar.openproject.domain.services.ProjectService"/>
         <applicationService serviceImplementation="io.bitswar.openproject.data.repository.ProjectRepository"
                             serviceInterface="io.bitswar.openproject.domain.repositories.IProjectRepository"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.data.datasources.ProjectDatasource"
+                            serviceInterface="io.bitswar.openproject.data.datasources.IProjectDatasource"/>
 
         <!-- WorkPackages -->
         <applicationService serviceImplementation="io.bitswar.openproject.domain.services.WorkPackageService"/>
