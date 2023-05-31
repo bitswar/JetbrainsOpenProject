@@ -1,19 +1,24 @@
 package io.bitswar.openproject.domain.services
 
-import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import io.bitswar.openproject.domain.entities.WorkPackage
 import io.bitswar.openproject.domain.repositories.IWorkPackageRepository
+import org.jetbrains.concurrency.Promise
+import org.jetbrains.concurrency.runAsync
 
 @Service
 class WorkPackageService {
     private val repository: IWorkPackageRepository = service()
-    fun getAllWorkpackages(): List<WorkPackage> {
-        return repository.getAllWorkpackages()
+    fun getAllWorkpackages(): Promise<Array<WorkPackage>> {
+        return runAsync {
+            repository.getAllWorkpackages()
+        }
     }
 
-    fun getProjectWorkpackages(projectId: String): List<WorkPackage> {
-        return repository.getProjectWorkpackages(projectId)
+    fun getProjectWorkpackages(projectId: String): Promise<Array<WorkPackage>> {
+        return runAsync {
+            repository.getProjectWorkpackages(projectId)
+        }
     }
 }

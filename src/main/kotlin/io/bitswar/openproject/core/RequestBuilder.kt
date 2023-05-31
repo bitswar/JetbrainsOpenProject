@@ -2,8 +2,8 @@ package io.bitswar.openproject.core
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
-import io.bitswar.openproject.features.auth.AuthenticationCredentials
-import org.apache.xerces.impl.dv.util.Base64
+import io.bitswar.openproject.core.endpoints.AuthEndpoints
+import io.bitswar.openproject.domain.repositories.IAuthRepository
 import java.net.URI
 import java.net.http.HttpRequest
 import java.net.http.HttpRequest.BodyPublisher
@@ -11,17 +11,23 @@ import java.net.http.HttpRequest.BodyPublishers
 
 @Service(Service.Level.APP)
 class RequestBuilder {
-    private val credentials: AuthenticationCredentials = service()
-    private fun authorizeRequest(): String {
-        return credentials.getScheme() + "apikey:" + credentials.getAccessToken() + "@" + credentials.getBaseUrl()
-    }
+    private val authRepository: IAuthRepository = service()
+    private val endpoints: AuthEndpoints = service()
 
-    private fun getBasicAuthHeader(): Pair<String, String>{
-        return "Authorization" to ("Basic " + Base64.encode(("apikey:${credentials.getAccessToken()}").toByteArray()))
-    }
     fun getRequest(path: String): HttpRequest {
-        val uri = URI.create(authorizeRequest() + path)
-        val (authHeaderName, authHeaderVal) = getBasicAuthHeader()
+        val uri = URI.create(
+            endpoints.authorizeUrl(
+                endpoints.buildEndpoint(path),
+                authRepository.getUsername(),
+                authRepository.getAccessToken()
+            )
+        )
+
+        val (authHeaderName, authHeaderVal) = endpoints.basicAuthHeader(
+            authRepository.getUsername(),
+            authRepository.getAccessToken(),
+        )
+
         return HttpRequest
                 .newBuilder()
                 .GET()
@@ -31,8 +37,18 @@ class RequestBuilder {
     }
 
     fun postRequest(path: String, body: BodyPublisher?): HttpRequest {
-        val uri = URI.create(authorizeRequest() + path)
-        val (authHeaderName, authHeaderVal) = getBasicAuthHeader()
+        val uri = URI.create(
+            endpoints.authorizeUrl(
+                endpoints.buildEndpoint(path),
+                authRepository.getUsername(),
+                authRepository.getAccessToken()
+            )
+        )
+
+        val (authHeaderName, authHeaderVal) = endpoints.basicAuthHeader(
+            authRepository.getUsername(),
+            authRepository.getAccessToken(),
+        )
         val sendBody = body ?: BodyPublishers.noBody()
         return HttpRequest
                 .newBuilder()

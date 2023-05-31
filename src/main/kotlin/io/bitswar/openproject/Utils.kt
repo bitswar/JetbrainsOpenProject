@@ -22,6 +22,22 @@ fun notify(first: String, second: String) = com.intellij.notification
                 )
         )
 
+/**
+ * Generate a [Notification] in IDEA.
+ * @param first title of the notification
+ * @param second content of the notification
+ */
+fun notifyError(first: String, second: String)  = com.intellij.notification
+        .Notifications.Bus
+        .notify(
+                Notification(
+                        GROUP_DISPLAY_ID,
+                        first,
+                        second,
+                        NotificationType.ERROR,
+                )
+        )
+
 fun isPluginInTestIDE(): Boolean = System.getProperty("idea.is.internal")?.toBoolean() ?: false
 
 fun isPluginInUnitTestMode(): Boolean = ApplicationManager.getApplication().isUnitTestMode

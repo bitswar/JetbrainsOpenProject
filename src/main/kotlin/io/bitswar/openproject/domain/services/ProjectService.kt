@@ -8,9 +8,9 @@ import org.jetbrains.concurrency.runAsync
 
 class ProjectService {
     private val repository: IProjectRepository = service()
-    fun getProjects(): Promise<List<Project>> {
+    fun getProjects(): Promise<Array<Project>> {
         return runAsync {
-            repository.getAllProjects();
+            repository.getProjects();
         }
     }
 }

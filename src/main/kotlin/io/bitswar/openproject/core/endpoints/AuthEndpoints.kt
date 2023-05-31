@@ -4,8 +4,7 @@ import com.intellij.openapi.components.Service
 import io.bitswar.openproject.core.Endpoints
 
 @Service(Service.Level.APP)
-class ProjectEndpoints: Endpoints() {
-    val projects: String
-        get() = buildEndpoint("projects")
-
+class AuthEndpoints: Endpoints() {
+    val me: String
+        get() = buildEndpoint("me")
 }

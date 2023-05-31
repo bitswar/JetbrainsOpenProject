@@ -25,20 +25,35 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Endpoints -->
+        <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.BaseEndpoints"/>
         <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.ProjectEndpoints"/>
-        <applicationService serviceImplementation="io.bitswar.openproject.core.RequestBuilder"/>
-        <applicationService serviceImplementation="io.bitswar.openproject.core.Endpoints"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.core.endpoints.AuthEndpoints"/>
 
-        <applicationService serviceImplementation="io.bitswar.openproject.features.workpackages.WorkPackagesDatasource"/>
+        <!-- Authentication -->
+        <applicationService serviceImplementation="io.bitswar.openproject.domain.services.AuthService"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.data.repository.AuthRepository"
+                            serviceInterface="io.bitswar.openproject.domain.repositories.IAuthRepository"/>
+
+        <!-- Project -->
+        <applicationService serviceImplementation="io.bitswar.openproject.domain.services.ProjectService"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.data.repository.ProjectRepository"
+                            serviceInterface="io.bitswar.openproject.domain.repositories.IProjectRepository"/>
+
+        <!-- WorkPackages -->
+        <applicationService serviceImplementation="io.bitswar.openproject.domain.services.WorkPackageService"/>
+        <applicationService serviceImplementation="io.bitswar.openproject.data.repository.WorkPackageRepository"
+                            serviceInterface="io.bitswar.openproject.domain.repositories.IWorkPackageRepository"/>
+
+        <!-- Core -->
+        <applicationService serviceImplementation="io.bitswar.openproject.core.RequestBuilder"/>
     </extensions>
     <actions>
-        <action id="io.bitswar.openproject.features.auth.actions.AuthenticationAction"
-                class="io.bitswar.openproject.features.auth.actions.AuthenticationAction"
-                text="OpenProject Authenticate" description="Start authentication process in OpenProjects instance">
-            <add-to-group group-id="$LRU" anchor="first"/>
-        </action>
-        <action id="io.bitswar.openproject.features.workpackages.application.GetWorkpackagesList"
-                class="io.bitswar.openproject.features.workpackages.application.GetWorkpackagesList"
-                text="Get workpackages list" description="Make API call for fetching list of available workpackages"/>
+        <action id="io.bitswar.openproject.application.AuthAction" class="io.bitswar.openproject.application.AuthAction"
+                text="OpenProject: Authenticate"
+                description="Runs authentication action and saves credentials if it was successful"/>
+        <action id="io.bitswar.openproject.application.RefreshWorkpackageArray"
+                class="io.bitswar.openproject.application.RefreshWorkpackageArray"
+                text="OpenProject: Refresh All Workpackages" description="Refreshes all work packages list"/>
     </actions>
 </idea-plugin>
